@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{title}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <div class="max-w-4xl mx-auto">
+            <nav class="mb-8">
+                <a href="/" class="text-blue-600 hover:text-blue-800 font-medium">← Back to Home</a>
+            </nav>
+            
+            <div class="bg-white rounded-lg shadow-lg p-8">
+                <h1 class="text-3xl font-bold text-gray-900 mb-6 text-center">{title}</h1>
+                
+                <div class="grid lg:grid-cols-3 gap-6 mb-8">
+                    <!-- Time Info Card -->
+                    <div class="bg-gradient-to-br from-blue-500 to-blue-600 text-white p-6 rounded-lg">
+                        <h3 class="text-lg font-semibold mb-2">Current Time</h3>
+                        <p class="text-2xl font-mono">{current_time}</p>
+                        <p class="text-blue-100 text-sm mt-2">Server timestamp</p>
+                    </div>
+                    
+                    <!-- User Info Card -->
+                    <div class="bg-gradient-to-br from-green-500 to-green-600 text-white p-6 rounded-lg">
+                        <h3 class="text-lg font-semibold mb-2">User Profile</h3>
+                        <p class="font-medium">{user_name}</p>
+                        <p class="text-green-100 text-sm">{user_email}</p>
+                        <p class="text-green-100 text-xs mt-2">Demo user account</p>
+                    </div>
+                    
+                    <!-- Stats Card -->
+                    <div class="bg-gradient-to-br from-purple-500 to-purple-600 text-white p-6 rounded-lg">
+                        <h3 class="text-lg font-semibold mb-2">Template Stats</h3>
+                        <p class="text-2xl font-bold">{template_vars}</p>
+                        <p class="text-purple-100 text-sm">Variables used</p>
+                    </div>
+                </div>
+                
+                <!-- Features Section -->
+                <div class="bg-gray-50 p-6 rounded-lg mb-6">
+                    <h3 class="text-xl font-semibold mb-4">Advanced Features</h3>
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div class="space-y-3">
+                            <div class="flex items-center space-x-2">
+                                <span class="w-2 h-2 bg-green-500 rounded-full"></span>
+                                <span>Dynamic content: {feature1}</span>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <span class="w-2 h-2 bg-green-500 rounded-full"></span>
+                                <span>Object access: {feature2}</span>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <span class="w-2 h-2 bg-green-500 rounded-full"></span>
+                                <span>Data binding: {feature3}</span>
+                            </div>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="flex items-center space-x-2">
+                                <span class="w-2 h-2 bg-blue-500 rounded-full"></span>
+                                <span>Status: {status}</span>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <span class="w-2 h-2 bg-blue-500 rounded-full"></span>
+                                <span>Version: {version}</span>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <span class="w-2 h-2 bg-blue-500 rounded-full"></span>
+                                <span>Mode: {mode}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Code Example -->
+                <div class="bg-gray-900 text-gray-100 p-6 rounded-lg mb-6">
+                    <h3 class="text-lg font-semibold mb-3 text-white">Template Usage Example</h3>
+                    <pre class="text-sm overflow-x-auto"><code>@template_engine.route("/advanced", "templates/advanced.html")
+async def advanced_demo(request):
+    return {{
+        "title": "{title}",
+        "current_time": "{current_time}",
+        "user_name": "{user_name}",
+        "template_vars": {template_vars}
+    }}</code></pre>
+                </div>
+                
+                <!-- Navigation -->
+                <div class="flex justify-between items-center">
+                    <a href="/template" class="px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-lg font-medium transition-colors">
+                        ← Simple Template
+                    </a>
+                    <div class="flex space-x-3">
+                        <a href="/sentiment" class="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg font-medium transition-colors">
+                            Try Sentiment Analysis
+                        </a>
+                        <a href="/power" class="px-4 py-2 bg-orange-600 hover:bg-orange-700 text-white rounded-lg font-medium transition-colors">
+                            Try Power Calculator
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

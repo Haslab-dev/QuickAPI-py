@@ -15,11 +15,13 @@ from .middleware import Middleware, CORSMiddleware
 from .websocket import WebSocket, WebSocketDisconnect
 from .openapi import api_doc, request_body, response, requires_auth
 
+# UI components imports
+from .ui import UI, Textbox, Slider, Number, Button, Text
+
 # Template engine imports
 from .templates import (
-    Component, html, run, bind, set_state, create_event_handler, use_state, use_reducer, use_named_state, TemplateResponse,
-    BaseLayout, DefaultLayout, MinimalLayout, LayoutConfig,
-    create_bootstrap_layout, create_tailwind_layout, create_custom_layout
+    Template, html, TemplateResponse, Layout,
+    default_layout, dark_layout, minimal_layout
 )
 
 __all__ = [
@@ -36,23 +38,20 @@ __all__ = [
     "response",
     "requires_auth",
     # Template engine exports
-    "Component",
+    "Template",
     "html",
-    "run",
-    "bind",
-    "set_state",
-    "create_event_handler",
-    "use_state",
-    "use_reducer",
-    "use_named_state",
     "TemplateResponse",
-    "BaseLayout",
-    "DefaultLayout", 
-    "MinimalLayout",
-    "LayoutConfig",
-    "create_bootstrap_layout",
-    "create_tailwind_layout",
-    "create_custom_layout",
+    "Layout",
+    "default_layout",
+    "dark_layout",
+    "minimal_layout",
+    # UI component exports
+    "UI",
+    "Textbox",
+    "Slider",
+    "Number",
+    "Button",
+    "Text",
 ]
 
 # AI modules - lazy import to avoid heavy dependencies

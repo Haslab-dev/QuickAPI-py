@@ -1,212 +1,89 @@
 """
-Layout system for QuickAPI templates
+Simplified Layout System
+
+Minimal layout system with Tailwind CSS support.
 """
 
-from typing import List, Dict, Any, Optional
-from dataclasses import dataclass, field
+from typing import Optional, Dict, Any
 
 
-@dataclass
-class LayoutConfig:
-    """Configuration for page layout"""
-    title: str = "QuickAPI Template"
-    meta_tags: List[Dict[str, str]] = field(default_factory=list)
-    stylesheets: List[str] = field(default_factory=list)  # External CSS URLs
-    custom_styles: str = ""  # Inline CSS
-    tailwind_css: str = ""  # Tailwind CSS v4 styles
-    scripts: List[str] = field(default_factory=list)  # External JS URLs
-    custom_scripts: str = ""  # Inline JS
-    body_class: str = ""
-    lang: str = "en"
-    charset: str = "UTF-8"
-    viewport: str = "width=device-width, initial-scale=1.0"
-
-
-class BaseLayout:
-    """Base layout class for HTML templates"""
+class Layout:
+    """Layout with Tailwind CSS"""
     
-    def __init__(self, config: Optional[LayoutConfig] = None):
-        self.config = config or LayoutConfig()
+    def __init__(
+        self,
+        title: str = "QuickAPI App",
+        theme: str = "default",
+        custom_css: str = "",
+        custom_js: str = ""
+    ):
+        self.title = title
+        self.theme = theme
+        self.custom_css = custom_css
+        self.custom_js = custom_js
     
-    def render_meta_tags(self) -> str:
-        """Render meta tags"""
-        meta_html = f'<meta charset="{self.config.charset}">\n'
-        meta_html += f'<meta name="viewport" content="{self.config.viewport}">\n'
+    def get_css(self) -> str:
+        """Get CSS for the layout"""
+        css = '<script src="https://cdn.tailwindcss.com"></script>'
         
-        for meta in self.config.meta_tags:
-            attrs = ' '.join(f'{k}="{v}"' for k, v in meta.items())
-            meta_html += f'<meta {attrs}>\n'
+        # Add theme-specific CSS
+        if self.theme == "dark":
+            css += """
+<style>
+body { background-color: #1a202c; color: #e2e8f0; }
+.card { background-color: #2d3748; border-color: #4a5568; }
+</style>
+"""
+        elif self.theme == "minimal":
+            css += """
+<style>
+body { font-family: system-ui, sans-serif; }
+.card { border: 1px solid #e2e8f0; }
+</style>
+"""
         
-        return meta_html
+        if self.custom_css:
+            css += f"<style>{self.custom_css}</style>"
+        
+        return css
     
-    def render_stylesheets(self) -> str:
-        """Render external stylesheets"""
-        css_html = ""
-        for stylesheet in self.config.stylesheets:
-            css_html += f'<link rel="stylesheet" href="{stylesheet}">\n'
-        return css_html
+    def get_js(self) -> str:
+        """Get JavaScript for the layout"""
+        if not self.custom_js:
+            return ""
+        
+        return f"<script>{self.custom_js}</script>"
     
-    def render_custom_styles(self) -> str:
-        """Render custom inline styles"""
-        if self.config.custom_styles:
-            return f"<style>\n{self.config.custom_styles}\n</style>\n"
-        return ""
-    
-    def render_tailwind_styles(self, tailwind_css: str = "") -> str:
-        """Render Tailwind CSS v4 styles"""
-        if tailwind_css:
-            return f'<style type="text/tailwindcss">\n{tailwind_css}\n</style>\n'
-        return ""
-    
-    def render_scripts(self) -> str:
-        """Render external scripts"""
-        js_html = ""
-        for script in self.config.scripts:
-            js_html += f'<script src="{script}"></script>\n'
-        return js_html
-    
-    def render_custom_scripts(self) -> str:
-        """Render custom inline scripts"""
-        if self.config.custom_scripts:
-            return f"<script>\n{self.config.custom_scripts}\n</script>\n"
-        return ""
-    
-    def render_head(self, additional_head_content: str = "") -> str:
-        """Render the complete head section"""
-        return f"""<head>
-    {self.render_meta_tags()}
-    <title>{self.config.title}</title>
-    {self.render_stylesheets()}
-    {self.render_tailwind_styles(self.config.tailwind_css)}
-    {self.render_custom_styles()}
-    {additional_head_content}
-</head>"""
-    
-    def render_body_start(self) -> str:
-        """Render the body opening tag"""
-        body_class = f' class="{self.config.body_class}"' if self.config.body_class else ""
-        return f"<body{body_class}>"
-    
-    def render_body_end(self, additional_scripts: str = "") -> str:
-        """Render the body closing with scripts"""
-        return f"""    {self.render_scripts()}
-    {self.render_custom_scripts()}
-    {additional_scripts}
-</body>"""
-    
-    def render(self, content: str, additional_head_content: str = "", additional_scripts: str = "") -> str:
-        """Render the complete HTML page"""
+    def wrap(self, content: str) -> str:
+        """Wrap content in a complete HTML page"""
         return f"""<!DOCTYPE html>
-<html lang="{self.config.lang}">
-{self.render_head(additional_head_content)}
-{self.render_body_start()}
-    {content}
-{self.render_body_end(additional_scripts)}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{self.title}</title>
+    {self.get_css()}
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        {content}
+    </div>
+    {self.get_js()}
+</body>
 </html>"""
 
 
-class DefaultLayout(BaseLayout):
-    """Default layout with basic styling"""
-    
-    def __init__(self, config: Optional[LayoutConfig] = None):
-        if config is None:
-            config = LayoutConfig()
-        
-        # Add default styles if none provided
-        if not config.custom_styles:
-            config.custom_styles = """
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            padding: 20px;
-            line-height: 1.6;
-        }
-        button {
-            margin: 5px;
-            padding: 8px 16px;
-            cursor: pointer;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            background: #f8f9fa;
-        }
-        button:hover {
-            background: #e9ecef;
-        }
-        input, textarea, select {
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            margin: 5px;
-        }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        """
-        
-        super().__init__(config)
+# Predefined layouts
+def default_layout(title: str = "QuickAPI App", **kwargs) -> Layout:
+    """Default layout with standard styling"""
+    return Layout(title=title, **kwargs)
 
 
-class MinimalLayout(BaseLayout):
-    """Minimal layout with no default styling"""
-    
-    def __init__(self, config: Optional[LayoutConfig] = None):
-        super().__init__(config or LayoutConfig())
+def dark_layout(title: str = "QuickAPI App", **kwargs) -> Layout:
+    """Dark theme layout"""
+    return Layout(title=title, theme="dark", **kwargs)
 
 
-# Layout presets
-def create_bootstrap_layout(title: str = "QuickAPI Template") -> BaseLayout:
-    """Create a layout with Bootstrap CSS framework"""
-    config = LayoutConfig(
-        title=title,
-        stylesheets=[
-            "https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-        ],
-        scripts=[
-            "https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
-        ]
-    )
-    return BaseLayout(config)
-
-
-def create_tailwind_layout(title: str = "QuickAPI Template", custom_theme: str = "") -> BaseLayout:
-    """Create a layout with Tailwind CSS v4 browser framework"""
-    
-    # Default Tailwind theme configuration
-    default_theme = """
-@theme {
-  --color-primary: #3b82f6;
-  --color-secondary: #6b7280;
-  --color-success: #10b981;
-  --color-warning: #f59e0b;
-  --color-danger: #ef4444;
-  --color-info: #06b6d4;
-}
-"""
-    
-    config = LayoutConfig(
-        title=title,
-        scripts=[
-            "https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"
-        ],
-        tailwind_css=custom_theme or default_theme
-    )
-    return BaseLayout(config)
-
-
-def create_custom_layout(
-    title: str = "QuickAPI Template",
-    stylesheets: List[str] = None,
-    scripts: List[str] = None,
-    custom_styles: str = "",
-    custom_scripts: str = ""
-) -> BaseLayout:
-    """Create a custom layout with specified resources"""
-    config = LayoutConfig(
-        title=title,
-        stylesheets=stylesheets or [],
-        scripts=scripts or [],
-        custom_styles=custom_styles,
-        custom_scripts=custom_scripts
-    )
-    return BaseLayout(config)
+def minimal_layout(title: str = "QuickAPI App", **kwargs) -> Layout:
+    """Minimal layout with no extra styling"""
+    return Layout(title=title, theme="minimal", **kwargs)

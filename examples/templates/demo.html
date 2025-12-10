@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{title}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <div class="max-w-4xl mx-auto">
+            <nav class="mb-8">
+                <a href="/" class="text-blue-600 hover:text-blue-800 font-medium">← Back to Home</a>
+            </nav>
+            
+            <div class="bg-white rounded-lg shadow-lg p-8">
+                <h1 class="text-3xl font-bold text-gray-900 mb-6 text-center">{title}</h1>
+                
+                <div class="prose max-w-none">
+                    <p class="text-lg text-gray-600 mb-6 text-center">{message}</p>
+                    
+                    <div class="bg-blue-50 border-l-4 border-blue-400 p-4 mb-6">
+                        <h3 class="text-lg font-semibold text-blue-800 mb-2">Template Features:</h3>
+                        <ul class="list-disc list-inside text-blue-700 space-y-1">
+                            <li>File-based HTML templates</li>
+                            <li>Python f-string syntax: {{variable}}</li>
+                            <li>Context variable substitution</li>
+                            <li>Responsive design with Tailwind CSS</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="bg-gray-50 p-6 rounded-lg">
+                            <h3 class="text-xl font-semibold mb-4">Dynamic Items</h3>
+                            <ul class="space-y-2">
+                                <li class="flex items-center space-x-2">
+                                    <span class="w-2 h-2 bg-green-500 rounded-full"></span>
+                                    <span>{item1}</span>
+                                </li>
+                                <li class="flex items-center space-x-2">
+                                    <span class="w-2 h-2 bg-green-500 rounded-full"></span>
+                                    <span>{item2}</span>
+                                </li>
+                                <li class="flex items-center space-x-2">
+                                    <span class="w-2 h-2 bg-green-500 rounded-full"></span>
+                                    <span>{item3}</span>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <div class="bg-gray-50 p-6 rounded-lg">
+                            <h3 class="text-xl font-semibold mb-4">Template Info</h3>
+                            <div class="space-y-2 text-sm text-gray-600">
+                                <p><strong>Template:</strong> {template_name}</p>
+                                <p><strong>Engine:</strong> QuickAPI SimpleTemplate</p>
+                                <p><strong>Variables:</strong> {var_count}</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-8 text-center">
+                        <a href="/template/advanced" class="inline-block px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-medium transition-colors">
+                            View Advanced Template →
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
