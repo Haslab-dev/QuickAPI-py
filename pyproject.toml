@@ -27,7 +27,8 @@ dependencies = [
   "uvicorn[standard]>=0.20",
   "pydantic>=2.0",
   "typing-extensions>=4.5",
-  "python-dotenv>=1.0"
+  "python-dotenv>=1.0",
+  "websockets>=11.0"
 ]
 
 # Optional AI dependencies

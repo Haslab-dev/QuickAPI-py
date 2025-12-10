@@ -15,6 +15,13 @@ from .middleware import Middleware, CORSMiddleware
 from .websocket import WebSocket, WebSocketDisconnect
 from .openapi import api_doc, request_body, response, requires_auth
 
+# Template engine imports
+from .templates import (
+    Component, html, run, bind, set_state, create_event_handler, use_state, use_reducer, use_named_state, TemplateResponse,
+    BaseLayout, DefaultLayout, MinimalLayout, LayoutConfig,
+    create_bootstrap_layout, create_tailwind_layout, create_custom_layout
+)
+
 __all__ = [
     "QuickAPI",
     "Route",
@@ -28,6 +35,24 @@ __all__ = [
     "request_body",
     "response",
     "requires_auth",
+    # Template engine exports
+    "Component",
+    "html",
+    "run",
+    "bind",
+    "set_state",
+    "create_event_handler",
+    "use_state",
+    "use_reducer",
+    "use_named_state",
+    "TemplateResponse",
+    "BaseLayout",
+    "DefaultLayout", 
+    "MinimalLayout",
+    "LayoutConfig",
+    "create_bootstrap_layout",
+    "create_tailwind_layout",
+    "create_custom_layout",
 ]
 
 # AI modules - lazy import to avoid heavy dependencies
